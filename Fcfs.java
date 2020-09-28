@@ -6,15 +6,16 @@ class Fcfs{
         Scanner sc= new Scanner(System.in);    //System.in is a standard input stream  
         System.out.print("enter no of process you want to add\n");
         int pno=sc.nextInt(),i;
-        Process job_queue[] =new Process[pno];
-        Process ready_queue[] =new Process[pno];
+        Process job_queue[] =new Process[10];
+        Process ready_queue[] =new Process[10];
         for( i=0;i<pno;i++){
             System.out.print("enter arrival time ");  
             int arrivaltime= sc.nextInt();  
             System.out.print("enter burst time ");  
             int bursttime= sc.nextInt();  
-            Process p = new Process(arrivaltime,bursttime);
+            Process p = new Process(arrivaltime,bursttime);            
             job_queue[i]=p;
+            System.out.print(job_queue[i].arrivaltime);  
         }
         System.out.println("starting Processor");
         int time=0,j=0;
@@ -37,6 +38,8 @@ class Fcfs{
             time+=ready_queue[i].bursttime;
             ready_queue[i].terminated=true;
             ready_queue[i].completiontime=time;
+            ready_queue[i].waitingtime=ready_queue[i].arrivaltime-time;
+            ready_queue[i].turnaroundtime=ready_queue[i].bursttime-ready_queue[i].waitingtime;
         }
         //printing output
         for( i=0;i<pno;i++){
